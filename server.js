@@ -1,24 +1,32 @@
 const {
   db,
   syncAndSeed,
-  models: { Cat, Owner },
+  models: { Cat, Owner, Breed },
 } = require("./db");
 
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
 const path = require("path");
-// const data = require("./data");
-const homePage = require("./views/homePage");
-const detailsPage = require("./views/detailsPage");
+const morgan = require("morgan");
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/dist", express.static(path.join(__dirname, "dist")));
+
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-const routes = require("./routes/posts");
+app.use("/api", require("./api"));
 
-app.use("/cats", routes);
+app.get("/", (req, res, next) =>
+  res.sendFile(path.join(__dirname, "index.html"))
+);
+
+//const routes = require("./routes/posts");
+//const homePage = require("./views/homePage");
+//const detailsPage = require("./views/detailsPage");
+
+//app.use("/cats", routes);
 
 const start = async () => {
   try {
