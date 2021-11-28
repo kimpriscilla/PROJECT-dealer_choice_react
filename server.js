@@ -1,7 +1,7 @@
 const {
   db,
   syncAndSeed,
-  models: { Cat, Owner, Breed },
+  models: { Cat, Owner, Relationship },
 } = require("./db");
 
 const express = require("express");

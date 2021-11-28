@@ -1,5 +1,5 @@
 const {
-  models: { Cat, Owner, Breed },
+  models: { Cat, Owner, Relationship },
 } = require("../db");
 
 const axios = require("axios");
@@ -23,9 +23,9 @@ router.get("/owners", async (req, res, next) => {
   }
 });
 
-router.get("/breeds", async (req, res, next) => {
+router.get("/relationships", async (req, res, next) => {
   try {
-    res.send(await Breed.findAll());
+    res.send(await Relationship.findAll());
   } catch (error) {
     next(error);
   }
@@ -34,11 +34,11 @@ router.get("/breeds", async (req, res, next) => {
 router.get("/owners/:id/cats", async (req, res, next) => {
   try {
     res.send(
-      await Cat.findAll({
+      await Relationship.findAll({
         where: {
           ownerId: req.params.id,
         },
-        include: [Breed],
+        include: [Cat],
       })
     );
   } catch (error) {
