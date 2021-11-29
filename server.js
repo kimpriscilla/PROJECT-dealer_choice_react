@@ -22,12 +22,6 @@ app.get("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "index.html"))
 );
 
-//const routes = require("./routes/posts");
-//const homePage = require("./views/homePage");
-//const detailsPage = require("./views/detailsPage");
-
-//app.use("/cats", routes);
-
 const start = async () => {
   try {
     await db.authenticate();

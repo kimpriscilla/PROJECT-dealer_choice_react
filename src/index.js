@@ -7,7 +7,6 @@ const relationshipsList = document.querySelector("#relationships-list");
 let cats, owners, relationships;
 
 const renderOwners = (owners) => {
-  // const ownerId = window.HashChangeEvent.slice(1);
   const html = owners
     .map(
       (owner) =>
@@ -24,7 +23,6 @@ const renderOwners = (owners) => {
 };
 
 const renderCats = (cats) => {
-  // const ownerId = window.HashChangeEvent.slice(1);
   const html = cats
     .map(
       (cat) =>
@@ -39,7 +37,6 @@ const renderCats = (cats) => {
 };
 
 const renderRelationships = (relationships) => {
-  // const ownerId = window.HashChangeEvent.slice(1);
   const html = relationships
     .map(
       (relationship) =>
