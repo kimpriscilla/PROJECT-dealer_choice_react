@@ -38,7 +38,7 @@ router.get("/owners/:id/cats", async (req, res, next) => {
         where: {
           ownerId: req.params.id,
         },
-        include: [Cat],
+        include: [Cat, Owner],
       })
     );
   } catch (error) {

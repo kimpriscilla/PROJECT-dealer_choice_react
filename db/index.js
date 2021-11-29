@@ -56,8 +56,8 @@ Relationship.belongsTo(Owner);
 
 const syncAndSeed = async () => {
   await db.sync({ force: true });
-  const [priscilla, lucy, moe] = await Promise.all(
-    ["priscilla", "lucy", "moe"].map((name) => Owner.create({ name }))
+  const [Priscilla, Lucy, Moe] = await Promise.all(
+    ["Priscilla", "Lucy", "Moe"].map((name) => Owner.create({ name }))
   );
   // await Promise.all(breeds.map((breed) => Breed.create(breed)));
   // breeds = breeds.reduce((acc, breed) => {
@@ -73,11 +73,11 @@ const syncAndSeed = async () => {
   );
 
   const relationships = await Promise.all([
-    Relationship.create({ ownerId: priscilla.id, catId: Nabi.id }),
-    Relationship.create({ ownerId: moe.id, catId: Gami.id }),
-    Relationship.create({ ownerId: lucy.id, catId: MoMo.id }),
-    Relationship.create({ ownerId: moe.id, catId: Lucky.id }),
-    Relationship.create({ ownerId: priscilla.id, catId: Dani.id }),
+    Relationship.create({ ownerId: Priscilla.id, catId: Nabi.id }),
+    Relationship.create({ ownerId: Moe.id, catId: Gami.id }),
+    Relationship.create({ ownerId: Lucy.id, catId: MoMo.id }),
+    Relationship.create({ ownerId: Moe.id, catId: Lucky.id }),
+    Relationship.create({ ownerId: Priscilla.id, catId: Dani.id }),
   ]);
 };
 

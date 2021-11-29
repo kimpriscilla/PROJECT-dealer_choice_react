@@ -44,9 +44,11 @@ const renderRelationships = (relationships) => {
     .map(
       (relationship) =>
         `
-    <li>
-    ${relationship.cat.name}
-
+    <li class = 'rela-list'>
+   Pet:${relationship.cat.name} </p>
+    <div></div>
+    Owner:
+      ${relationship.owner.name}
     </li>
     `
     )
