@@ -1,35 +1,31 @@
 {
-  "name": "dealer_choice_js",
+  "name": "dealer_choice_react",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server --ignore dist/ --ignore src/ & npm run build:dev",
     "build": "webpack",
-    "build:dev": "npm run build -- --watch --mode development"
+    "build:dev": "npm run build -- --watch --mode=development",
+    "start:dev": "npm run build:dev & nodemon server --ignore dist/ --ignore src/"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kimpriscilla/dealer_choice_js.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kimpriscilla/dealer_choice_js/issues"
-  },
-  "homepage": "https://github.com/kimpriscilla/dealer_choice_js#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "html": "^1.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.14",
-    "pg": "^8.7.1",
-    "sequelize": "^6.9.0"
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
-    "axios": "^0.24.0",
-    "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1"
+    "@babel/core": "^7.12.9",
+    "@babel/preset-react": "^7.12.7",
+    "axios": "^0.21.0",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "webpack": "^5.9.0",
+    "webpack-cli": "^4.2.0"
   }
 }

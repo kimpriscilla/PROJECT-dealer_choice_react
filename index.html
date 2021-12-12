@@ -1,42 +1,10 @@
 <html>
   <head>
     <script src="/dist/main.js" defer></script>
+    <link rel="stylesheet" href="/public/styles.css" />
     <title>Cats!</title>
-    <style>
-      body {
-        padding: 1rem;
-        font-family: "verdana";
-        background-color: lightblue;
-      }
-      body > h1 {
-        text-align: center;
-      }
-      main {
-        display: flex;
-      }
-      section {
-        flex: 2;
-      }
-      .rela-list {
-        font-weight: bold;
-      }
-    </style>
   </head>
   <body>
-    <h1>Cats' & Owner!</h1>
-    <main>
-      <section>
-        <h1>Owners</h1>
-        <ul id="owners-list"></ul>
-      </section>
-      <section>
-        <h1>Cats Names</h1>
-        <ul id="cats-list"></ul>
-      </section>
-      <section>
-        <h1>Relationship</h1>
-        <ul id="relationships-list"></ul>
-      </section>
-    </main>
+    <div id="app"></div>
   </body>
 </html>

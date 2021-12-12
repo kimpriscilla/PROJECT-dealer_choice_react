@@ -1,84 +1,87 @@
 const Sequelize = require("sequelize");
 
-const db = new Sequelize("postgres://localhost/dealer_choice_db");
+const db = new Sequelize("postgres://localhost/dealer_choice_react");
 
-// let breeds = [
-//   { name: "Nabi", breed: "American short Hair" },
+let ownerData = [
+  {
+    name: "Priscilla",
+    phone: "777-777-7777",
+  },
+  { name: "Lucy", phone: "800-789-6987" },
+  {
+    name: "Moe",
+    phone: "001-205-2021",
+  },
+];
 
-//   { name: "Gami", breed: "Maine Coon" },
-
-//   { name: "Dani", breed: "Persian" },
-
-//   { name: "Lucky", breed: "Orange Tabby" },
-
-//   { name: "MoMo", breed: "Bengal" },
-
-//   { name: "Mittens", breed: "British Shorthair" },
-
-//   { name: "Kevin", breed: "Scottish Fold" },
-// ];
+//!how to make associations without hard coding it?
 
 const Owner = db.define("owner", {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true,
-  },
   name: {
     type: Sequelize.STRING,
   },
+  phone: {
+    type: Sequelize.STRING,
+  },
 });
+
+let catData = [
+  {
+    name: "Nabi",
+    breed: "American Tabby",
+    fact: "Nabi is a Tabby cat, has multiple colors (gray, brown, white & black). Has the cutest eyes, on the bigger side, very fluffy, chubby and cute but has very bad temper and can become very violet. PLEASE BE AWARE. Senior cat, response to Nabi ",
+  },
+  {
+    name: "Gami",
+    breed: "Black American Shorthair",
+    fact: "All black cat, responds to Gami. Very sweet & cuddly, not aggressive at all. Has blue/greenish eyes, paws are also black",
+  },
+  {
+    name: "Dani",
+    breed: "Ginger",
+    fact: "Ginger cat! Very shy, will not approach and will not let you hold him. Relatively on the smaller side. Meows often. Fluffy ",
+  },
+];
 
 const Cat = db.define("cat", {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true,
-  },
   name: {
     type: Sequelize.STRING,
   },
-  // breed: {
-  //   type: Sequelize.STRING,
-  // },
-});
-
-const Relationship = db.define("relationship", {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true,
+  breed: {
+    type: Sequelize.STRING,
+  },
+  fact: {
+    type: Sequelize.STRING,
   },
 });
 
-Relationship.belongsTo(Cat);
-Relationship.belongsTo(Owner);
+Cat.belongsTo(Owner);
 
 const syncAndSeed = async () => {
   await db.sync({ force: true });
   const [Priscilla, Lucy, Moe] = await Promise.all(
-    ["Priscilla", "Lucy", "Moe"].map((name) => Owner.create({ name }))
-  );
-  // await Promise.all(breeds.map((breed) => Breed.create(breed)));
-  // breeds = breeds.reduce((acc, breed) => {
-  //   acc[breed.name] = breed;
-  //   return acc;
-  // }, {});
-  // console.log(breeds);
-
-  const [Nabi, Gami, Dani, MoMo, Lucky, Mittens, Kevin] = await Promise.all(
-    ["Nabi", "Gami", "Dani", "MoMo", "Lucky", "Mittens", "Kevin"].map((name) =>
-      Cat.create({ name })
+    ownerData.map((el) =>
+      Owner.create({
+        name: el.name,
+        phone: el.phone,
+      })
     )
   );
-
-  const relationships = await Promise.all([
-    Relationship.create({ ownerId: Priscilla.id, catId: Nabi.id }),
-    Relationship.create({ ownerId: Moe.id, catId: Gami.id }),
-    Relationship.create({ ownerId: Lucy.id, catId: MoMo.id }),
-    Relationship.create({ ownerId: Moe.id, catId: Lucky.id }),
-    Relationship.create({ ownerId: Priscilla.id, catId: Dani.id }),
-  ]);
+  const [Nabi, Gami, Dani] = await Promise.all(
+    catData.map((el) =>
+      Cat.create({
+        name: el.name,
+        breed: el.breed,
+        fact: el.fact,
+      })
+    )
+  );
+  Nabi.ownerId = Priscilla.id;
+  Gami.ownerId = Lucy.id;
+  Dani.ownerId = Moe.id;
+  Nabi.save();
+  Gami.save();
+  Dani.save();
 };
 
 module.exports = {
@@ -87,6 +90,5 @@ module.exports = {
   models: {
     Cat,
     Owner,
-    Relationship,
   },
 };
