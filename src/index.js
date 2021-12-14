@@ -2,14 +2,89 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
 
 const app = document.querySelector("#app");
 
+const SingleCat = (props) => {
+  const { selectedCat } = props;
+  const { name, breed, fact } = selectedCat;
+  return (
+    <div id="single-cat">
+      {/* <img src={imageUrl} /> */}
+      <div id="contact-info">
+        <p>Name: {name}</p>
+        <p>breed: {breed}</p>
+        <p>Fact: {fact}</p>
+      </div>
+    </div>
+  );
+};
+
+const AllCats = (props) => {
+  const { cats, selectCat } = props;
+  return (
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Breed</th>
+          <th>Owner</th>
+        </tr>
+        {cats.map((cat) => (
+          <EachCat key={cat.id} cat={cat} />
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+const EachCat = (props) => {
+  const { cat, selectCat } = props;
+  return (
+    <tr onClick={() => console.log("what is this", selectCat)}>
+      <td>{cat.name}</td>
+      <td>{cat.breed}</td>
+      <td>{cat.fact}</td>
+    </tr>
+  );
+};
+
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      cats: [],
+      selectedCat: {},
+    };
+    this.selectCat = this.selectCat.bind(this);
+  }
+  async componentDidMount() {
+    const cats = (await axios.get("/api/cats")).data;
+    console.log(cats);
+    this.setState({ cats });
+  }
+  async selectCat(id) {
+    const selectedCat = (await axios.get(`/api/cats/${id}`)).data;
+    console.log(selectedCat);
+    this.setState({ selectedCat });
+  }
   render() {
+    const { cats, selectedCat } = this.state;
+    const { selectCat } = this;
+
     return (
       <div>
-        <h1> HELLO WORLD</h1>
+        <div>
+          <h1> LOST PLEASE HELP!</h1>
+        </div>
+        <div id="container">
+          {selectedCat.id ? (
+            <SingleCat selectedCat={selectedCat} />
+          ) : (
+            <AllCats selectCat={selectCat} cats={cats} />
+          )}
+        </div>
       </div>
     );
   }
