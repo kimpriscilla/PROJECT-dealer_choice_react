@@ -8,15 +8,27 @@ const app = document.querySelector("#app");
 
 const SingleCat = (props) => {
   const { selectedCat } = props;
-  const { name, breed, fact } = selectedCat;
+  const { name, breed, fact, owner } = selectedCat;
   return (
     <div id="single-cat">
       {/* <img src={imageUrl} /> */}
-      <div id="contact-info">
-        <p>Name: {name}</p>
-        <p>breed: {breed}</p>
-        <p>Fact: {fact}</p>
-      </div>
+      <table id="cat-info">
+        <tbody>
+          <tr>
+            <th>Name: </th>
+            <th>breed: </th>
+            <th>Fact: </th>
+          </tr>
+          <tr>
+            <td>{name}</td>
+            <td>{breed}</td>
+            <td>{fact}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>PLEASE CONTACT:</h2>
+      <p>Owner: {owner.name}</p>
+      <p>Phone: {owner.phone}</p>
     </div>
   );
 };
@@ -32,7 +44,7 @@ const AllCats = (props) => {
           <th>Owner</th>
         </tr>
         {cats.map((cat) => (
-          <EachCat key={cat.id} cat={cat} />
+          <EachCat selectCat={selectCat} key={cat.id} cat={cat} />
         ))}
       </tbody>
     </table>
@@ -40,12 +52,17 @@ const AllCats = (props) => {
 };
 
 const EachCat = (props) => {
-  const { cat, selectCat } = props;
+  const { cat, selectCat, selectedCat } = props;
   return (
-    <tr onClick={() => console.log("what is this", selectCat)}>
+    <tr
+      onClick={() => {
+        selectCat(cat.id);
+        console.log("cat--", selectedCat);
+      }}
+    >
       <td>{cat.name}</td>
       <td>{cat.breed}</td>
-      <td>{cat.fact}</td>
+      <td>{cat.owner.name}</td>
     </tr>
   );
 };
@@ -58,6 +75,7 @@ class App extends React.Component {
       selectedCat: {},
     };
     this.selectCat = this.selectCat.bind(this);
+    //this.addCat = this.addCat.bind(this);
   }
   async componentDidMount() {
     const cats = (await axios.get("/api/cats")).data;
@@ -65,18 +83,30 @@ class App extends React.Component {
     this.setState({ cats });
   }
   async selectCat(id) {
-    const selectedCat = (await axios.get(`/api/cats/${id}`)).data;
+    const selectedCat = (await axios.get(`/api/cats/${id}`)).data[0];
     console.log(selectedCat);
     this.setState({ selectedCat });
   }
+
+  // addCat = async () => {
+  //   // const { data } = await axios.post("/add");
+  //   this.setState({
+  //     cats: [...this.state.cats, Math.random()],
+  //   });
+  // };
+
   render() {
     const { cats, selectedCat } = this.state;
-    const { selectCat } = this;
+    const { selectCat, addCat } = this;
 
     return (
       <div>
         <div>
-          <h1> LOST PLEASE HELP!</h1>
+          <h1>
+            {" "}
+            <a href="/"> LOST PLEASE HELP!</a>
+          </h1>
+          {/* <button onClick={addCat}>ADD CAT</button> */}
         </div>
         <div id="container">
           {selectedCat.id ? (

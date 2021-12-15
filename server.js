@@ -4,6 +4,8 @@ const {
   models: { Cat, Owner },
 } = require("./db");
 
+const faker = require("faker");
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -21,6 +23,10 @@ app.use("/api", require("./api"));
 app.get("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "index.html"))
 );
+
+// app.post("/add", async (req, res, next) => {
+//   res.send(await Cat.create({ name: faker.company.companyName() }));
+// });
 
 const start = async () => {
   try {

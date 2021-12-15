@@ -49,3 +49,30 @@ span #cat-breed {
 div {
   text-align: center;
 }
+
+#cat-info p {
+  font-family: "Helvetica Neue";
+  background-color: white;
+}
+
+#container {
+  align-items: center;
+  cursor: default;
+  display: flex;
+  flex-grow: 2;
+  justify-content: center;
+}
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #222222;
+}
+
+th,
+td {
+  padding: 5px;
+}
