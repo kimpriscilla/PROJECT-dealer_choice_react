@@ -3,69 +3,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import SingleCat from "./SingleCat";
+import AllCats from "./AllCats";
 
 const app = document.querySelector("#app");
-
-const SingleCat = (props) => {
-  const { selectedCat } = props;
-  const { name, breed, fact, owner } = selectedCat;
-  return (
-    <div id="single-cat">
-      {/* <img src={imageUrl} /> */}
-      <table id="cat-info">
-        <tbody>
-          <tr>
-            <th>Name: </th>
-            <th>breed: </th>
-            <th>Fact: </th>
-          </tr>
-          <tr>
-            <td>{name}</td>
-            <td>{breed}</td>
-            <td>{fact}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h2>PLEASE CONTACT:</h2>
-      <p>Owner: {owner.name}</p>
-      <p>Phone: {owner.phone}</p>
-    </div>
-  );
-};
-
-const AllCats = (props) => {
-  const { cats, selectCat } = props;
-  return (
-    <table>
-      <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Breed</th>
-          <th>Owner</th>
-        </tr>
-        {cats.map((cat) => (
-          <EachCat selectCat={selectCat} key={cat.id} cat={cat} />
-        ))}
-      </tbody>
-    </table>
-  );
-};
-
-const EachCat = (props) => {
-  const { cat, selectCat, selectedCat } = props;
-  return (
-    <tr
-      onClick={() => {
-        selectCat(cat.id);
-        console.log("cat--", selectedCat);
-      }}
-    >
-      <td>{cat.name}</td>
-      <td>{cat.breed}</td>
-      <td>{cat.owner.name}</td>
-    </tr>
-  );
-};
 
 class App extends React.Component {
   constructor() {
@@ -79,12 +20,12 @@ class App extends React.Component {
   }
   async componentDidMount() {
     const cats = (await axios.get("/api/cats")).data;
-    console.log(cats);
+    console.log("APP Cats-->", cats);
     this.setState({ cats });
   }
   async selectCat(id) {
     const selectedCat = (await axios.get(`/api/cats/${id}`)).data[0];
-    console.log(selectedCat);
+
     this.setState({ selectedCat });
   }
 
@@ -121,79 +62,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, app);
-//!------------------------
-
-// import axios from "axios";
-// const catsList = document.querySelector("#cats-list");
-// const ownersList = document.querySelector("#owners-list");
-// const relationshipsList = document.querySelector("#relationships-list");
-
-// let cats, owners, relationships;
-
-// const renderOwners = (owners) => {
-//   const html = owners
-//     .map(
-//       (owner) =>
-//         `
-//     <li>
-//     <a href="#${owner.id}">
-//     ${owner.name}
-//     </a>
-//     </li>
-//     `
-//     )
-//     .join("");
-//   ownersList.innerHTML = html;
-// };
-
-// const renderCats = (cats) => {
-//   const html = cats
-//     .map(
-//       (cat) =>
-//         `
-//     <li>
-//     ${cat.name}
-//     </li>
-//     `
-//     )
-//     .join("");
-//   catsList.innerHTML = html;
-// };
-
-// const renderRelationships = (relationships) => {
-//   const html = relationships
-//     .map(
-//       (relationship) =>
-//         `
-//     <li class = 'rela-list'>
-//    Pet:${relationship.cat.name} </p>
-//     <div></div>
-//     Owner:
-//       ${relationship.owner.name}
-//     </li>
-//     `
-//     )
-//     .join("");
-//   relationshipsList.innerHTML = html;
-// };
-
-// const start = async () => {
-//   try {
-//     owners = (await axios.get("/api/owners")).data;
-//     cats = (await axios.get("/api/cats")).data;
-//     //console.log(owners, cats);
-//     renderOwners(owners);
-//     renderCats(cats);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// window.addEventListener("hashchange", async () => {
-//   const ownerId = window.location.hash.slice(1);
-//   const url = `/api/owners/${ownerId}/cats`;
-//   const relationships = (await axios(url)).data;
-//   renderRelationships(relationships);
-// });
-
-// start();
