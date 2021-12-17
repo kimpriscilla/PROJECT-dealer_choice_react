@@ -18,7 +18,7 @@ const EachCat = (props) => {
           deleteCat(cat.id);
         }}
       >
-        CLICK TO DELETE
+        DELETE CAT
       </td>
     </tr>
   );

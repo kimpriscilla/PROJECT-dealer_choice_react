@@ -59,6 +59,7 @@ class App extends React.Component {
             {" "}
             <a href="/"> LOST PLEASE HELP!</a>
           </h1>
+          <h4>Click on name to see details!!</h4>
           <button onClick={addCat}>ADD CAT</button>
         </div>
         <div id="container">
