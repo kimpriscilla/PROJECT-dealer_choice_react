@@ -24,12 +24,28 @@ app.get("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "index.html"))
 );
 
+//created post routes for my add function
 app.post("/add", async (req, res, next) => {
-  res.send(await Cat.create({ name: faker.company.companyName() }));
+  try {
+    await Cat.create({
+      name: faker.animal.cat(),
+      breed: faker.company.companyName(),
+      fact: faker.commerce.productDescription(),
+      ownerId: 1,
+    });
+    const allCats = await Cat.findAll({
+      include: [Owner],
+    });
+    res.send(allCats);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-app.post("/addOwner", async (req, res, next) => {
-  res.send(await Owner.create({ name: faker.company.companyName() }));
+app.delete("/delete/:id", async (req, res, next) => {
+  const catsToDelete = await Cat.findByPk(req.params.id);
+  catsToDelete.destroy();
+  res.sendStatus(204);
 });
 
 const start = async () => {

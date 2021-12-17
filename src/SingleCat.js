@@ -3,7 +3,6 @@ import React from "react";
 const SingleCat = (props) => {
   const { selectedCat } = props;
   const { name, breed, fact, owner } = selectedCat;
-  console.log("what", selectedCat);
   return (
     <div id="single-cat">
       {/* <img src={imageUrl} /> */}

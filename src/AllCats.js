@@ -2,8 +2,7 @@ import React from "react";
 import EachCat from "./EachCat";
 
 const AllCats = (props) => {
-  const { cats, selectCat } = props;
-  console.log("ALL CATS->>", cats);
+  const { cats, selectCat, deleteCat } = props;
   return (
     <table>
       <tbody>
@@ -12,9 +11,17 @@ const AllCats = (props) => {
           <th>Breed</th>
           <th>Owner</th>
         </tr>
-        {cats.map((cat) => (
-          <EachCat selectCat={selectCat} key={cat.id} cat={cat} />
-        ))}
+
+        {cats.map((cat) => {
+          return (
+            <EachCat
+              selectCat={selectCat}
+              key={cat.id}
+              cat={cat}
+              deleteCat={deleteCat}
+            />
+          );
+        })}
       </tbody>
     </table>
   );

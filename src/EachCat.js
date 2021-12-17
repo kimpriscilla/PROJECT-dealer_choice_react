@@ -1,18 +1,25 @@
 import React from "react";
 
 const EachCat = (props) => {
-  const { cat, selectCat, selectedCat } = props;
-  console.log("CAT->>", cat);
+  const { cat, selectCat, deleteCat } = props;
   return (
-    <tr
-      onClick={() => {
-        selectCat(cat.id);
-        //console.log("cat--", selectedCat);
-      }}
-    >
-      <td>{cat.name}</td>
+    <tr>
+      <td
+        onClick={() => {
+          selectCat(cat.id);
+        }}
+      >
+        {cat.name}
+      </td>
       <td>{cat.breed}</td>
       <td>{cat.owner.name}</td>
+      <td
+        onClick={() => {
+          deleteCat(cat.id);
+        }}
+      >
+        CLICK TO DELETE
+      </td>
     </tr>
   );
 };

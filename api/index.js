@@ -41,14 +41,4 @@ router.get("/cats/:id", async (req, res, next) => {
   }
 });
 
-router.put("/cats/:id", async (req, res, next) => {
-  try {
-    const contact = await Cat.findByPk(req.params.id);
-    await contact.update(req.body);
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = router;
